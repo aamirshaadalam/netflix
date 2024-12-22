@@ -9,7 +9,7 @@ import { TILE_WIDTH } from "../listItem/ListItem";
 export const LEFT_MARGIN = 50;
 
 // number of items per list
-export const ITEMS_PER_LIST = 30;
+export const ITEMS_PER_LIST = 18;
 
 const List = () => {
     const carouselRef = useRef<HTMLDivElement>(null);

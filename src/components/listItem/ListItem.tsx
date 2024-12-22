@@ -3,7 +3,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
-import { useState } from "react";
+import { useRef } from "react";
 import { LEFT_MARGIN } from "../list/List";
 
 export interface ListItemProps {
@@ -18,24 +18,36 @@ export const TILE_WIDTH = 230;
 export const HOVER_SIZE_DIFF = 100;
 
 const ListItem = ({ index }: ListItemProps) => {
-    const [isHovered, setIsHovered] = useState(false);
+    const listItemRef = useRef<HTMLDivElement>(null);
 
-    const getLeftPosition = () => {
-        if (!isHovered) return undefined;
+    const handleHover = (isHover: boolean) => {
+        if (!listItemRef.current) return;
+
+        if (!isHover) {
+            listItemRef.current.style.left = '';
+            return;
+        }
 
         const numberOfTiles = Math.floor((innerWidth - LEFT_MARGIN) / TILE_WIDTH);
         const startPositionOfTile = index * TILE_WIDTH;
 
-        if (index % numberOfTiles === 0) return startPositionOfTile;
-        if (index % numberOfTiles === numberOfTiles - 1) return startPositionOfTile - HOVER_SIZE_DIFF;
-        return startPositionOfTile - (HOVER_SIZE_DIFF / 2);
+        if (index % numberOfTiles === 0) {
+            listItemRef.current.style.left = `${startPositionOfTile}px`;
+            return;
+        }
+
+        if (index % numberOfTiles === numberOfTiles - 1) {
+            listItemRef.current.style.left = `${startPositionOfTile - HOVER_SIZE_DIFF}px`;
+            return;
+        }
+
+        listItemRef.current.style.left = `${startPositionOfTile - (HOVER_SIZE_DIFF / 2)}px`;
     };
 
     return (
         <div className="list-item"
-            style={{ left: getLeftPosition() }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}>
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)} ref={listItemRef}>
             <img src="src/assets/slide-image.jpg" alt="" />
             <div className="info">
                 <div className="icons">
