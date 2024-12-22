@@ -12,20 +12,18 @@
     .carousel-container {
         position: relative;
         width: 100%;
-        overflow: hidden;
         margin-top: 10px;
 
         .carousel {
             margin-left: 50px;
-            width: max-content;
             display: flex;
+            width: max-content;
             gap: 5px;
-            overflow-x: auto;
             transform: translateX(0px);
             transition: all 1s ease;
         }
 
-        .carousel-button {
+        .carousel-icon {
             position: absolute;
             top: 0;
             bottom: 0;
@@ -37,7 +35,7 @@
             border: none;
             padding: 10px;
             cursor: pointer;
-            z-index: 99;
+            z-index: 10;
 
             &.left {
                 left: 0;
@@ -45,6 +43,10 @@
 
             &.right {
                 right: 0;
+            }
+
+            &.hidden {
+                display: none;
             }
         }
     }
