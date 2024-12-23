@@ -1,54 +1,49 @@
-import "./ListItem.scss";
+import "./Tile.scss";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import { useRef } from "react";
-import { LEFT_MARGIN } from "../list/List";
+import { LEFT_MARGIN } from "../slider/Slider";
 
-export interface ListItemProps {
+export interface TileProps {
     index: number;
 }
 
 // this width includes the margin
-export const TILE_WIDTH = 230;
+export const TILE_WIDTH = 265;
 
-// the tile width increases by 100px
-// when hovered
-export const HOVER_SIZE_DIFF = 100;
-
-const ListItem = ({ index }: ListItemProps) => {
+const Tile = ({ index }: TileProps) => {
     const listItemRef = useRef<HTMLDivElement>(null);
 
     const handleHover = (isHover: boolean) => {
         if (!listItemRef.current) return;
 
         if (!isHover) {
-            listItemRef.current.style.left = '';
+            listItemRef.current.style.transform = '';
             return;
         }
 
         const numberOfTiles = Math.floor((innerWidth - LEFT_MARGIN) / TILE_WIDTH);
-        const startPositionOfTile = index * TILE_WIDTH;
 
         if (index % numberOfTiles === 0) {
-            listItemRef.current.style.left = `${startPositionOfTile}px`;
+            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(14%)`;
             return;
         }
 
         if (index % numberOfTiles === numberOfTiles - 1) {
-            listItemRef.current.style.left = `${startPositionOfTile - HOVER_SIZE_DIFF}px`;
+            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(-10%)`;
             return;
         }
 
-        listItemRef.current.style.left = `${startPositionOfTile - (HOVER_SIZE_DIFF / 2)}px`;
+        listItemRef.current.style.transform = `scale(1.4, 2.5)`;
     };
 
     return (
-        <div className="list-item"
+        <div className="tile"
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)} ref={listItemRef}>
-            <img src="src/assets/slide-image.jpg" alt="" />
+            <div className="img">{index + 1}</div>
             <div className="info">
                 <div className="icons">
                     <PlayArrowIcon />
@@ -71,4 +66,4 @@ const ListItem = ({ index }: ListItemProps) => {
     );
 };
 
-export default ListItem;
+export default Tile;

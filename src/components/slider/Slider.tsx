@@ -1,9 +1,9 @@
-import "./List.scss";
+import "./Slider.scss";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ListItem from "../listItem/ListItem";
+import ListItem from "../tile/Tile";
 import { useRef, useState } from "react";
-import { TILE_WIDTH } from "../listItem/ListItem";
+import { TILE_WIDTH } from "../tile/Tile";
 
 // left margin for tile list
 export const LEFT_MARGIN = 50;
@@ -11,7 +11,11 @@ export const LEFT_MARGIN = 50;
 // number of items per list
 export const ITEMS_PER_LIST = 20;
 
-const List = () => {
+export interface SliderProps {
+    title: string;
+}
+
+const Slider = ({ title }: SliderProps) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     const posX = useRef<number>(0);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -50,17 +54,17 @@ const List = () => {
     };
 
     return (
-        <div className="list">
-            <span className="list-title">Continue Watching</span>
+        <div className="slider">
+            <span className="slider-title">{title}</span>
             <div className="carousel-container">
-                <ArrowBackIosIcon className={`carousel-icon left ${showLeftArrow ? "" : "hidden"}`} onClick={scrollLeft} />
                 <div className="carousel" ref={carouselRef}>
                     {listItems.map((item, index) => <ListItem key={item} index={index} />)}
                 </div>
-                <ArrowForwardIosIcon className="carousel-icon right" onClick={scrollRight} />
+                <ArrowBackIosIcon className={`nav-icon left ${showLeftArrow ? "" : "hidden"}`} onClick={scrollLeft} />
+                <ArrowForwardIosIcon className="nav-icon right" onClick={scrollRight} />
             </div>
         </div>
     );
 };
 
-export default List;
+export default Slider;

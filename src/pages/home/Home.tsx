@@ -1,5 +1,5 @@
 import Featured from "../../components/featured/Featured";
-import List from "../../components/list/List";
+import Slider from "../../components/slider/Slider";
 import Navbar from "../../components/navbar/Navbar";
 import "./Home.scss";
 
@@ -8,10 +8,9 @@ const Home = () => {
         <div className="home">
             <Navbar />
             <Featured />
-            <List />
-            <List />
-            <List />
-            <List />
+            <Slider title="Continue Watching" />
+            <Slider title="Recently Added" />
+            <Slider title="Trending" />
         </div>
     );
 };
