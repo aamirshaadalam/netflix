@@ -4,7 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ListItem from "../tile/Tile";
 import { useRef, useState } from "react";
 import { TILE_WIDTH } from "../tile/Tile";
-import useRemToPixels from "../../hooks/useRemToPixels";
+import getNumberOfVisibleTiles from "../../utils/getNumberOfVisibleTiles";
 
 // left margin for tile list
 export const LEFT_MARGIN = 3.5;
@@ -21,16 +21,15 @@ const Slider = ({ title }: SliderProps) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     const posX = useRef<number>(0);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
-    const remToPixels = useRemToPixels();
     const listItems = Array.from({ length: ITEMS_PER_LIST }, (_item, index) => index + 1);
 
     const scrollLeft = () => {
         if (carouselRef.current) {
-            const numberOfTiles = Math.floor((innerWidth / remToPixels - LEFT_MARGIN) / TILE_WIDTH);
-            posX.current += TILE_WIDTH * numberOfTiles;
+            const numberOfVisibleTiles = getNumberOfVisibleTiles();
+            posX.current += TILE_WIDTH * numberOfVisibleTiles;
 
             if (posX.current > 0) {
-                posX.current = -TILE_WIDTH * (listItems.length - numberOfTiles);
+                posX.current = -TILE_WIDTH * (listItems.length - numberOfVisibleTiles);
             }
 
             carouselRef.current.style.transform = `translateX(${posX.current}rem)`;
@@ -41,13 +40,13 @@ const Slider = ({ title }: SliderProps) => {
     const scrollRight = () => {
         if (carouselRef.current) {
             setShowLeftArrow(true);
-            const numberOfTiles = Math.floor((innerWidth / remToPixels - LEFT_MARGIN) / TILE_WIDTH);
-            posX.current -= TILE_WIDTH * numberOfTiles;
-            const totalNumberOfTiles = listItems.length % numberOfTiles !== 0 ?
-                Math.floor(listItems.length / numberOfTiles) * numberOfTiles + numberOfTiles :
+            const numberOfVisibleTiles = getNumberOfVisibleTiles();
+            posX.current -= TILE_WIDTH * numberOfVisibleTiles;
+            const totalNumberOfTiles = listItems.length % numberOfVisibleTiles !== 0 ?
+                Math.floor(listItems.length / numberOfVisibleTiles) * numberOfVisibleTiles + numberOfVisibleTiles :
                 listItems.length;
 
-            if (posX.current < -TILE_WIDTH * (totalNumberOfTiles - numberOfTiles)) {
+            if (posX.current < -TILE_WIDTH * (totalNumberOfTiles - numberOfVisibleTiles)) {
                 posX.current = 0;
             }
 

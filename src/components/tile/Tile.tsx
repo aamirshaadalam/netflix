@@ -5,7 +5,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import { useRef } from "react";
 import { LEFT_MARGIN, RIGHT_MARGIN } from "../slider/Slider";
-import useRemToPixels from "../../hooks/useRemToPixels";
+import getNumberOfVisibleTiles from "../../utils/getNumberOfVisibleTiles";
 
 export interface TileProps {
     index: number;
@@ -19,7 +19,6 @@ const SCALE_Y = 2.5;
 
 const Tile = ({ index }: TileProps) => {
     const listItemRef = useRef<HTMLDivElement>(null);
-    const remToPixels = useRemToPixels();
 
     const handleHover = (isHover: boolean) => {
         if (!listItemRef.current) return;
@@ -29,14 +28,14 @@ const Tile = ({ index }: TileProps) => {
             return;
         }
 
-        const numberOfTiles = Math.floor((innerWidth / remToPixels - LEFT_MARGIN) / TILE_WIDTH);
+        const numberOfVisibleTiles = getNumberOfVisibleTiles();
 
-        if (index % numberOfTiles === 0) {
+        if (index % numberOfVisibleTiles === 0) {
             listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${LEFT_MARGIN}rem)`;
             return;
         }
 
-        if (index % numberOfTiles === numberOfTiles - 1) {
+        if (index % numberOfVisibleTiles === numberOfVisibleTiles - 1) {
             listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${-RIGHT_MARGIN}rem)`;
             return;
         }
