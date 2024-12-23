@@ -18,35 +18,37 @@ const SCALE_X = 1.4;
 const SCALE_Y = 2.5;
 
 const Tile = ({ index }: TileProps) => {
-    const listItemRef = useRef<HTMLDivElement>(null);
+    const tileDiv = useRef<HTMLDivElement>(null);
 
     const handleHover = (isHover: boolean) => {
-        if (!listItemRef.current) return;
+        if (!tileDiv.current) return;
 
         if (!isHover) {
-            listItemRef.current.style.transform = '';
+            tileDiv.current.style.transform = '';
             return;
         }
 
         const numberOfVisibleTiles = getNumberOfVisibleTiles();
 
+        // first visible tile
         if (index % numberOfVisibleTiles === 0) {
-            listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${LEFT_MARGIN}rem)`;
+            tileDiv.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${LEFT_MARGIN}rem)`;
             return;
         }
 
+        // last visible tile
         if (index % numberOfVisibleTiles === numberOfVisibleTiles - 1) {
-            listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${-RIGHT_MARGIN}rem)`;
+            tileDiv.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${-RIGHT_MARGIN}rem)`;
             return;
         }
 
-        listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y})`;
+        tileDiv.current.style.transform = `scale(${SCALE_X},${SCALE_Y})`;
     };
 
     return (
         <div className="tile"
             onMouseEnter={() => handleHover(true)}
-            onMouseLeave={() => handleHover(false)} ref={listItemRef}>
+            onMouseLeave={() => handleHover(false)} ref={tileDiv}>
             <div className="img">{index + 1}</div>
             <div className="info">
                 <div className="icons">

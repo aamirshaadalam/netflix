@@ -28,6 +28,7 @@ const Slider = ({ title }: SliderProps) => {
             const numberOfVisibleTiles = getNumberOfVisibleTiles();
             xCoordinate.current += TILE_WIDTH * numberOfVisibleTiles;
 
+            // if scroll beyond the first tile. Circle back to the last group of tiles
             if (xCoordinate.current > 0) {
                 xCoordinate.current = -TILE_WIDTH * (listItems.length - numberOfVisibleTiles);
             }
@@ -46,6 +47,7 @@ const Slider = ({ title }: SliderProps) => {
                 Math.floor(listItems.length / numberOfVisibleTiles) * numberOfVisibleTiles + numberOfVisibleTiles :
                 listItems.length;
 
+            // if scroll beyond the last tile. Circle back to first group of tiles
             if (xCoordinate.current < -TILE_WIDTH * (totalNumberOfTiles - numberOfVisibleTiles)) {
                 xCoordinate.current = 0;
             }
