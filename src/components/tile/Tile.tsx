@@ -4,17 +4,19 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import { useRef } from "react";
-import { LEFT_MARGIN } from "../slider/Slider";
+import { LEFT_MARGIN, RIGHT_MARGIN } from "../slider/Slider";
 
 export interface TileProps {
     index: number;
 }
 
-// this width includes the margin
-export const TILE_WIDTH = 265;
+// this width includes the gap 
+// (tile width in rem + gap in rem)
+export const TILE_WIDTH = (16.3 + 0.25);
 
 const Tile = ({ index }: TileProps) => {
     const listItemRef = useRef<HTMLDivElement>(null);
+    const remToPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
     const handleHover = (isHover: boolean) => {
         if (!listItemRef.current) return;
@@ -24,15 +26,15 @@ const Tile = ({ index }: TileProps) => {
             return;
         }
 
-        const numberOfTiles = Math.floor((innerWidth - LEFT_MARGIN) / TILE_WIDTH);
+        const numberOfTiles = Math.floor((innerWidth / remToPixels - LEFT_MARGIN) / TILE_WIDTH);
 
         if (index % numberOfTiles === 0) {
-            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(14%)`;
+            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(${LEFT_MARGIN}rem)`;
             return;
         }
 
         if (index % numberOfTiles === numberOfTiles - 1) {
-            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(-10%)`;
+            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(${-RIGHT_MARGIN}rem)`;
             return;
         }
 
