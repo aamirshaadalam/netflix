@@ -4,6 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ListItem from "../tile/Tile";
 import { useRef, useState } from "react";
 import { TILE_WIDTH } from "../tile/Tile";
+import useRemToPixels from "../../hooks/useRemToPixels";
 
 // left margin for tile list
 export const LEFT_MARGIN = 3.5;
@@ -20,7 +21,7 @@ const Slider = ({ title }: SliderProps) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     const posX = useRef<number>(0);
     const [showLeftArrow, setShowLeftArrow] = useState(false);
-    const remToPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const remToPixels = useRemToPixels();
     const listItems = Array.from({ length: ITEMS_PER_LIST }, (_item, index) => index + 1);
 
     const scrollLeft = () => {

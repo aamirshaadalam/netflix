@@ -5,6 +5,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import { useRef } from "react";
 import { LEFT_MARGIN, RIGHT_MARGIN } from "../slider/Slider";
+import useRemToPixels from "../../hooks/useRemToPixels";
 
 export interface TileProps {
     index: number;
@@ -12,11 +13,13 @@ export interface TileProps {
 
 // this width includes the gap 
 // (tile width in rem + gap in rem)
-export const TILE_WIDTH = (16.3 + 0.25);
+export const TILE_WIDTH = 16.3 + 0.25;
+const SCALE_X = 1.4;
+const SCALE_Y = 2.5;
 
 const Tile = ({ index }: TileProps) => {
     const listItemRef = useRef<HTMLDivElement>(null);
-    const remToPixels = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const remToPixels = useRemToPixels();
 
     const handleHover = (isHover: boolean) => {
         if (!listItemRef.current) return;
@@ -29,16 +32,16 @@ const Tile = ({ index }: TileProps) => {
         const numberOfTiles = Math.floor((innerWidth / remToPixels - LEFT_MARGIN) / TILE_WIDTH);
 
         if (index % numberOfTiles === 0) {
-            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(${LEFT_MARGIN}rem)`;
+            listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${LEFT_MARGIN}rem)`;
             return;
         }
 
         if (index % numberOfTiles === numberOfTiles - 1) {
-            listItemRef.current.style.transform = `scale(1.4, 2.5) translateX(${-RIGHT_MARGIN}rem)`;
+            listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateX(${-RIGHT_MARGIN}rem)`;
             return;
         }
 
-        listItemRef.current.style.transform = `scale(1.4, 2.5)`;
+        listItemRef.current.style.transform = `scale(${SCALE_X},${SCALE_Y})`;
     };
 
     return (
