@@ -9,7 +9,7 @@ import { TILE_WIDTH } from "../listItem/ListItem";
 export const LEFT_MARGIN = 50;
 
 // number of items per list
-export const ITEMS_PER_LIST = 18;
+export const ITEMS_PER_LIST = 20;
 
 const List = () => {
     const carouselRef = useRef<HTMLDivElement>(null);
@@ -37,8 +37,11 @@ const List = () => {
             setShowLeftArrow(true);
             const numberOfTiles = Math.floor((innerWidth - LEFT_MARGIN) / TILE_WIDTH);
             posX.current -= TILE_WIDTH * numberOfTiles;
+            const totalNumberOfTiles = listItems.length % numberOfTiles !== 0 ?
+                Math.floor(listItems.length / numberOfTiles) * numberOfTiles + numberOfTiles :
+                listItems.length;
 
-            if (posX.current < -TILE_WIDTH * (listItems.length - numberOfTiles)) {
+            if (posX.current < -TILE_WIDTH * (totalNumberOfTiles - numberOfTiles)) {
                 posX.current = 0;
             }
 
