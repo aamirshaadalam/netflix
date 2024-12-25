@@ -63,6 +63,23 @@
                         border: 2px solid gray;
                         border-radius: 50%;
                         padding: 0.3rem;
+
+                        &:hover {
+                            border-color: white;
+                        }
+                    }
+
+                    .volume {
+                        transform: translate(7rem, -5rem);
+
+                        .icon {
+                            color: white;
+                            border-color: white;
+                        }
+
+                        &.unmuted {
+                            display: none;
+                        }
                     }
                 }
 
