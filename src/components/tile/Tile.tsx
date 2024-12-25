@@ -50,7 +50,7 @@ const Tile = ({ index }: TileProps) => {
         <div className="tile"
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)} ref={tileDiv}>
-            <div className="img">{index + 1}</div>
+            <img src={`https://picsum.photos/320/180?random=${index + 1}`} alt="" />
             <div className="hover-content">
                 <video autoPlay muted>
                     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
