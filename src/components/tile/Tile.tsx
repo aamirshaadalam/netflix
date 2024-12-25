@@ -17,6 +17,7 @@ export const TILE_WIDTH = 16.3 + 0.25;
 const SCALE_X = 1.5;
 const SCALE_Y = 2.5;
 const TRANSLATE_Y = -1.1;
+const VIDEO_SRC = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
 const Tile = ({ index }: TileProps) => {
     const tileDiv = useRef<HTMLDivElement>(null);
@@ -50,11 +51,10 @@ const Tile = ({ index }: TileProps) => {
         <div className="tile"
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)} ref={tileDiv}>
-            <img src={`https://picsum.photos/320/180?random=${index + 1}`} alt="" />
+            <img src={`https://picsum.photos/320/180?random=${Math.floor(Math.random() * 100)}`} alt="" />
             <div className="hover-content">
                 <video autoPlay muted>
-                    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                        type="video/mp4" />
+                    <source src={VIDEO_SRC} type="video/mp4" />
                 </video>
                 <div className="info">
                     <div className="icons">
