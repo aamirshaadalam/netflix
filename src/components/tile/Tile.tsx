@@ -29,8 +29,7 @@ const Tile = ({ index }: TileProps) => {
 
     const scaleTile = (isHovered: boolean) => {
         if (!tileRef.current) return;
-
-        const tile = tileRef.current;
+        const { current: tile } = tileRef;
 
         if (!isHovered) {
             tile.style.transform = 'none';
@@ -56,7 +55,7 @@ const Tile = ({ index }: TileProps) => {
         tile.style.transform = `scale(${SCALE_X},${SCALE_Y}) translateY(${TRANSLATE_Y}rem)`;
     };
 
-    const togggleMute = (isMuted: boolean) => {
+    const showMutedIcon = (isMuted: boolean) => {
         if (mutedRef.current) {
             mutedRef.current.style.display = isMuted ? 'block' : 'none';
         }
@@ -68,14 +67,13 @@ const Tile = ({ index }: TileProps) => {
 
     const playVideo = (isHovered: boolean) => {
         if (!videoRef.current) return;
-
-        const video = videoRef.current;
+        const { current: video } = videoRef;
 
         if (!isHovered) {
             video.muted = true;
             video.pause();
             video.currentTime = 0;
-            togggleMute(true);
+            showMutedIcon(true);
         }
 
         video.play();
@@ -83,16 +81,14 @@ const Tile = ({ index }: TileProps) => {
 
     const unmuteVideo = () => {
         if (!videoRef.current) return;
-        const video = videoRef.current;
-        video.muted = false;
-        togggleMute(false);
+        videoRef.current.muted = false;
+        showMutedIcon(false);
     };
 
     const muteVideo = () => {
         if (!videoRef.current) return;
-        const video = videoRef.current;
-        video.muted = true;
-        togggleMute(true);
+        videoRef.current.muted = true;
+        showMutedIcon(true);
     };
 
     const handleHover = (isHovered: boolean) => {
