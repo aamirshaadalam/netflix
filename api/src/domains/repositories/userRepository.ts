@@ -1,7 +1,7 @@
 import User, { IUser } from '../models/userModel';
 
-const createUser = async (user: Partial<IUser>): Promise<IUser> => {
-  return await User.create(user);
+const createUser = async (newUser: Partial<IUser>): Promise<IUser> => {
+  return await User.create(newUser);
 };
 
 const findUserByEmail = async (email: string): Promise<IUser | null> => {
@@ -12,19 +12,14 @@ const findUserByUsername = async (username: string): Promise<IUser | null> => {
   return await User.findOne({ username });
 };
 
-const isExistingUser = async (user: Partial<IUser>): Promise<boolean> => {
+const findUser = async (user: Partial<IUser>): Promise<IUser | null> => {
   const { email, username } = user;
-  const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-  if (existingUser) {
-    return true;
-  }
-
-  return false;
+  return await User.findOne({ $or: [{ email }, { username }] });
 };
 
 export default {
   createUser,
   findUserByEmail,
   findUserByUsername,
-  isExistingUser,
+  findUser,
 };

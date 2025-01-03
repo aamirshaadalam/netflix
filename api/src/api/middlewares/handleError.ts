@@ -1,26 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
-import ConfigurationError from '../../core/errors/config-error';
-import BadRequestError from '../../core/errors/bad-request';
+import ConfigurationError from '../../core/errors/configError';
+import BadRequestError from '../../core/errors/badRequest';
 
-const handleError = (error: any, _request: Request, response: Response, _next: NextFunction): void => {
+const handleError = (error: any, _request: Request, response: Response, _next: NextFunction) => {
   console.error(error);
+  const { statusCode = 500, name: type = 'InternalServerError', message = '', details = [] } = error;
+
   if (error instanceof ConfigurationError) {
-     response.status(error.statusCode).json({
-      type: error.name,
-      message: error.message,
-    });
-  } else if (error instanceof BadRequestError) {
-    response.status(error.statusCode).json({
-      type: error.name,
-      message: error.message,
-      details: error.details,
-    });
-  } else {
-    response.status(500).json({
-      type: 'InternalServerError',
-      message: error.message,
-    });
+    response.status(statusCode).json({ type, message });
+    return;
   }
+
+  if (error instanceof BadRequestError) {
+    response.status(statusCode).json({ type, message, details });
+    return;
+  }
+
+  response.status(statusCode).json({ type, message });
+  return;
 };
 
 export default handleError;

@@ -10,7 +10,7 @@ export interface IMedia extends Document {
   video: string;
   year: number;
   duration: string;
-  ageLimit: string;
+  rating: string;
   genre: string;
   isMovie: boolean;
 }
@@ -25,7 +25,7 @@ const MediaSchema: Schema = new Schema({
   video: { type: String },
   year: { type: Number },
   duration: { type: String },
-  ageLimit: { type: String },
+  rating: { type: String },
   genre: { type: String },
   isMovie: { type: Boolean, default: true },
 });

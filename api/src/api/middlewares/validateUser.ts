@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectSchema } from 'joi';
-import BadRequestError from '../../core/errors/bad-request';
+import BadRequestError from '../../core/errors/badRequest';
 
 const validateUser = (schema: ObjectSchema) => {
   return (req: Request, _res: Response, next: NextFunction): void => {
