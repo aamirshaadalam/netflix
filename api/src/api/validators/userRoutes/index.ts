@@ -1,3 +1,3 @@
-import updateSchema from './updateSchema';
+import { validateUpdateUser } from './validateUpdateUser';
 
-export { updateSchema };
+export { validateUpdateUser };

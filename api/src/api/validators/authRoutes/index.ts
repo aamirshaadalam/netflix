@@ -1,4 +1,4 @@
-import registerSchema from './registerSchema';
-import loginSchema from './loginSchema';
+import { validateRegister } from './validateRegister';
+import { validateLogin } from './validateLogin';
 
-export { registerSchema, loginSchema };
+export { validateRegister, validateLogin };

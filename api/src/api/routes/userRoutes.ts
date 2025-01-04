@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import UserController from '../controllers/userController';
-import validateRequestBody from '../middlewares/validateRequestBody';
-import { updateSchema } from '../validators/userRoutes';
+import { validateUpdateUser } from '../validators/userRoutes';
 
 const router = Router();
-router.put('/:id', validateRequestBody(updateSchema), UserController.updateUser);
+router.put('/:id', validateUpdateUser, UserController.updateUser);
 export default router;
