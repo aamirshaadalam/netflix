@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi, { ObjectSchema } from 'joi';
-import { BadRequestError } from '../../core/errors';
+import { BadRequestError } from '../../../core/errors';
 
 interface ValidationSchema {
   body?: ObjectSchema;

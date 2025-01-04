@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import validateRequest from '../../middlewares/validateRequest';
+import validateRequest from '../validateRequest';
 
 const body = Joi.object({
   username: Joi.string().required(),
