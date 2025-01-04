@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import dotenv from 'dotenv';
-import ConfigurationError from '../core/errors/configError';
+import { ConfigurationError } from '../core/errors';
 
 dotenv.config();
 

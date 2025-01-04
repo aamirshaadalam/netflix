@@ -1,14 +1,14 @@
-import { NextFunction, Request, Response } from 'express';
-import ForbiddenError from '../../core/errors/forbidden';
+import { NextFunction, Response } from 'express';
+import { ForbiddenError } from '../../core/errors';
 import UserService from '../../domains/services/userService';
-import { AuthRequest } from '../../types/AuthRequest';
+import { CustomRequest } from '../../types/CustomRequest';
 
 // get user
 // get all users
 // get user stats
 
 // update user
-const updateUser = async (req: AuthRequest, res: Response, next: NextFunction) => {
+const updateUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
   if (req.user?.id === req.params.id || req.user?.isAdmin) {
     try {
       const { id, isAdmin = false } = req.user;
@@ -24,5 +24,5 @@ const updateUser = async (req: AuthRequest, res: Response, next: NextFunction) =
 // delete user
 
 export default {
-    updateUser
+  updateUser,
 };

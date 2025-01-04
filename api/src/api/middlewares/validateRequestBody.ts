@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { ObjectSchema } from 'joi';
-import BadRequestError from '../../core/errors/badRequest';
+import { BadRequestError } from '../../core/errors';
 
-const validateUser = (schema: ObjectSchema) => {
+const validateRequestBody = (schema: ObjectSchema) => {
   return (req: Request, _res: Response, next: NextFunction): void => {
     const { error } = schema.validate(req.body, { abortEarly: false });
     if (error) {
@@ -13,4 +13,4 @@ const validateUser = (schema: ObjectSchema) => {
   };
 };
 
-export default validateUser;
+export default validateRequestBody;

@@ -1,11 +1,10 @@
 import { NextFunction, Response } from 'express';
-import UnauthorizedError from '../../core/errors/unauthorized';
+import { UnauthorizedError, ForbiddenError } from '../../core/errors';
 import jwt from 'jsonwebtoken';
 import environment from '../../config/environment';
-import ForbiddenError from '../../core/errors/forbidden';
-import { AuthRequest } from '../../types/AuthRequest';
+import { CustomRequest } from '../../types/CustomRequest';
 
-const authenticateToken = (req: AuthRequest, _res: Response, next: NextFunction) => {
+const authenticateToken = (req: CustomRequest, _res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {

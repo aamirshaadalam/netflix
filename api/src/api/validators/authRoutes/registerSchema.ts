@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const userValidationSchema = Joi.object({
+const registerSchema = Joi.object({
     username: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
@@ -8,4 +8,4 @@ const userValidationSchema = Joi.object({
     isAdmin: Joi.boolean(),
 });
 
-export default userValidationSchema;
+export default registerSchema;

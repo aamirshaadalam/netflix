@@ -1,4 +1,4 @@
-import BadRequestError from '../../core/errors/badRequest';
+import { BadRequestError } from '../../core/errors';
 import { IUser } from '../models/userModel';
 import UserRepository from '../repositories/userRepository';
 import CryptoJS from 'crypto-js';
