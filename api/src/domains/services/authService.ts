@@ -3,7 +3,6 @@ import { IUser } from '../models/userModel';
 import UserRepository from '../repositories/userRepository';
 import CryptoJS from 'crypto-js';
 import environment from '../../config/environment';
-import { removeSensitiveUserData } from '../../core/utils/removeSensitiveUserData';
 import jwt from 'jsonwebtoken';
 
 // register user
@@ -16,20 +15,20 @@ const registerUser = async (newUser: Partial<IUser>) => {
   }
 
   newUser.password = CryptoJS.AES.encrypt(password!, environment.cryptoPrivateKey).toString();
-  const user = await UserRepository.createUser(newUser);
-
-  return removeSensitiveUserData(user);
+  return await UserRepository.createUser(newUser);
 };
 
 // loggin user
 const loginUser = async (user: Partial<IUser>) => {
   const existingUser = await UserRepository.findUserByEmailOrUsername(user);
+  const password = await UserRepository.getUserPassword(existingUser?.id);
+  console.log(`password: ${password}`);
 
-  if (!existingUser) {
+  if (!existingUser || !password) {
     throw new BadRequestError('The credentials are incorrect');
   }
 
-  const bytes = CryptoJS.AES.decrypt(existingUser.password, environment.cryptoPrivateKey);
+  const bytes = CryptoJS.AES.decrypt(password, environment.cryptoPrivateKey);
   const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
   if (originalPassword !== user.password) {
@@ -41,7 +40,7 @@ const loginUser = async (user: Partial<IUser>) => {
     expiresIn: '1h',
   });
 
-  return { user: removeSensitiveUserData(existingUser), accessToken };
+  return { loggedInUser: existingUser, accessToken };
 };
 
 export default {

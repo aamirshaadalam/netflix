@@ -1,7 +1,10 @@
 import User, { IUser } from '../models/userModel';
 
 const createUser = async (newUser: Partial<IUser>) => {
-  return await User.create(newUser);
+  const user = await User.create(newUser);
+  const userObject: Partial<IUser> = user.toObject();
+  delete userObject.password;
+  return userObject;
 };
 
 const findUserByEmail = async (email: string) => {
@@ -14,6 +17,11 @@ const findUserByUsername = async (username: string) => {
 
 const findUserById = async (id: string) => {
   return await User.findById(id);
+};
+
+const getUserPassword = async (id: string) => {
+  const user = await User.findById(id).select('password');
+  return user?.password;
 };
 
 const findUserByEmailOrUsername = async (user: Partial<IUser>) => {
@@ -37,4 +45,5 @@ export default {
   findUserById,
   updateUser,
   deleteUser,
+  getUserPassword,
 };

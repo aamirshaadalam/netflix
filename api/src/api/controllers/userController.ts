@@ -4,25 +4,39 @@ import UserService from '../../domains/services/userService';
 import { CustomRequest } from '../../types/CustomRequest';
 
 // get user
+const getUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
+  try {
+    const user = await UserService.getUser(req);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
 // get all users
 // get user stats
 
 // update user
 const updateUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
-  if (req.user?.id === req.params.id || req.user?.isAdmin) {
-    try {
-      const { id, isAdmin = false } = req.user;
-      const updatedUser = await UserService.updateUser(id, isAdmin, req.body);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
-    }
-  } else {
-    throw new ForbiddenError('You are not authorized to update this user');
+  try {
+    const updatedUser = await UserService.updateUser(req);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
   }
 };
+
 // delete user
+const deleteUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
+  try {
+    await UserService.deleteUser(req);
+    res.status(200).json({ message: `User with id ${req.params.id} deleted successfully` });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export default {
   updateUser,
+  deleteUser,
+  getUser,
 };
