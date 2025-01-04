@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import UnauthorizedError from '../../core/errors/unauthorized';
 import jwt from 'jsonwebtoken';
 import environment from '../../config/environment';
 import ForbiddenError from '../../core/errors/forbidden';
+import { AuthRequest } from '../../types/AuthRequest';
 
-const authenticateToken = (req: Request, _res: Response, next: NextFunction) => {
-  const token = req.header('Authorization')?.split(' ')[1];
+const authenticateToken = (req: AuthRequest, _res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     throw new UnauthorizedError('You are not authorized to access the requested resource');

@@ -6,28 +6,33 @@ import environment from '../../config/environment';
 import { removeSensitiveUserData } from '../../core/utils/removeSensitiveUserData';
 import jwt from 'jsonwebtoken';
 
-const registerUser = async (newUser: Partial<IUser>): Promise<Partial<IUser>> => {
+// register user
+const registerUser = async (newUser: Partial<IUser>) => {
   const { email, username, password } = newUser;
-  const existingUser = await UserRepository.findUser(newUser);
+  const existingUser = await UserRepository.findUserByEmailOrUsername(newUser);
+
   if (existingUser) {
     throw new BadRequestError(`A user with username: ${username} or email: ${email} already exists`);
   }
+
   newUser.password = CryptoJS.AES.encrypt(password!, environment.cryptoPrivateKey).toString();
   const user = await UserRepository.createUser(newUser);
+
   return removeSensitiveUserData(user);
 };
 
+// loggin user
 const loginUser = async (user: Partial<IUser>) => {
-  const existingUser = await UserRepository.findUser(user);
+  const existingUser = await UserRepository.findUserByEmailOrUsername(user);
 
   if (!existingUser) {
     throw new BadRequestError('The credentials are incorrect');
   }
 
   const bytes = CryptoJS.AES.decrypt(existingUser.password, environment.cryptoPrivateKey);
-  const decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+  const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
-  if (decryptedPassword !== user.password) {
+  if (originalPassword !== user.password) {
     throw new BadRequestError('The credentials are incorrect');
   }
 
