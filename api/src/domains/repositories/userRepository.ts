@@ -7,6 +7,10 @@ const createUser = async (newUser: Partial<IUser>) => {
   return userObject;
 };
 
+const findAllUsers = async (limit: number, skip: number) => {
+  return await User.find().limit(limit).skip(skip);
+};
+
 const findUserByEmail = async (email: string) => {
   return await User.findOne({ email });
 };
@@ -46,4 +50,5 @@ export default {
   updateUser,
   deleteUser,
   getUserPassword,
+  findAllUsers,
 };

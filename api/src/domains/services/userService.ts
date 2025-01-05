@@ -10,7 +10,12 @@ const getUser = async (req: CustomRequest) => {
 };
 
 // get all users
-// get user stats
+const getAllUsers = async (req: CustomRequest) => {
+  const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 10;
+  const skip = req.query.skip ? parseInt(req.query.skip.toString()) : 0;
+  return await UserRepository.findAllUsers(limit, skip);
+};
+
 // update user
 const updateUser = async (req: CustomRequest) => {
   if (req.user?.id === req.params.id || req.user?.isAdmin) {
@@ -39,4 +44,4 @@ const deleteUser = async (req: CustomRequest) => {
   }
 };
 
-export default { updateUser, deleteUser, getUser };
+export default { updateUser, deleteUser, getUser, getAllUsers };

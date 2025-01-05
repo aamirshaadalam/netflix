@@ -1,3 +1,4 @@
 import { validateUpdateUser } from './validateUpdateUser';
+import { validateGetAllUsers } from './validateGetAllUsers';
 
-export { validateUpdateUser };
+export { validateUpdateUser, validateGetAllUsers };

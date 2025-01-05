@@ -22,7 +22,6 @@ const registerUser = async (newUser: Partial<IUser>) => {
 const loginUser = async (user: Partial<IUser>) => {
   const existingUser = await UserRepository.findUserByEmailOrUsername(user);
   const password = await UserRepository.getUserPassword(existingUser?.id);
-  console.log(`password: ${password}`);
 
   if (!existingUser || !password) {
     throw new BadRequestError('The credentials are incorrect');

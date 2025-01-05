@@ -12,8 +12,16 @@ const getUser = async (req: CustomRequest, res: Response, next: NextFunction) =>
     next(error);
   }
 };
+
 // get all users
-// get user stats
+const getAllUsers = async (req: CustomRequest, res: Response, next: NextFunction) => {
+  try {
+    const users = await UserService.getAllUsers(req);
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // update user
 const updateUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -39,4 +47,5 @@ export default {
   updateUser,
   deleteUser,
   getUser,
+  getAllUsers,
 };
