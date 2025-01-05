@@ -9,7 +9,7 @@ const schema = Joi.object({
   DB_URI: Joi.string().required(),
   CRYPTO_PRIVATE_KEY: Joi.string().required(),
   JWT_SECRET_KEY: Joi.string().required(),
-});
+}).unknown();
 
 const { error, value } = schema.validate(process.env);
 

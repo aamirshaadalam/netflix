@@ -1,4 +1,4 @@
-import { CRYPTO_PRIVATE_KEY } from '../../config/environment';
+import { cryptoPrivateKey } from '../../config/environment';
 import { ForbiddenError } from '../../core/errors';
 import { CustomRequest } from '../../types/CustomRequest';
 import { IUser } from '../models/userModel';
@@ -22,7 +22,7 @@ const updateUser = async (req: CustomRequest) => {
     const user: Partial<IUser> = req.body;
 
     if (user.password) {
-      user.password = CryptoJS.AES.encrypt(user.password, CRYPTO_PRIVATE_KEY).toString();
+      user.password = CryptoJS.AES.encrypt(user.password, cryptoPrivateKey).toString();
     }
 
     if (!req.user?.isAdmin) {
