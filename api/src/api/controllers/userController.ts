@@ -1,5 +1,4 @@
 import { NextFunction, Response } from 'express';
-import { ForbiddenError } from '../../core/errors';
 import UserService from '../../domains/services/userService';
 import { CustomRequest } from '../../types/CustomRequest';
 
@@ -37,7 +36,7 @@ const updateUser = async (req: CustomRequest, res: Response, next: NextFunction)
 const deleteUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
     await UserService.deleteUser(req);
-    res.status(200).json({ message: `User with id ${req.params.id} deleted successfully` });
+    res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
     next(error);
   }

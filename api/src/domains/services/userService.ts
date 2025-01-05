@@ -6,14 +6,22 @@ import UserRepository from '../repositories/userRepository';
 
 // get user
 const getUser = async (req: CustomRequest) => {
-  return await UserRepository.findUserById(req.params.id);
+  if (req.user?.id === req.params.id || req.user?.isAdmin) {
+    return await UserRepository.findUserById(req.params.id);
+  } else {
+    throw new ForbiddenError('You are not authorized');
+  }
 };
 
 // get all users
 const getAllUsers = async (req: CustomRequest) => {
-  const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 10;
-  const skip = req.query.skip ? parseInt(req.query.skip.toString()) : 0;
-  return await UserRepository.findAllUsers(limit, skip);
+  if (req.user?.isAdmin) {
+    const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 10;
+    const skip = req.query.skip ? parseInt(req.query.skip.toString()) : 0;
+    return await UserRepository.findAllUsers(limit, skip);
+  } else {
+    throw new ForbiddenError('You are not authorized');
+  }
 };
 
 // update user
