@@ -2,7 +2,7 @@ import { BadRequestError } from '../../core/errors';
 import { IUser } from '../models/userModel';
 import UserRepository from '../repositories/userRepository';
 import CryptoJS from 'crypto-js';
-import environment from '../../config/environment';
+import { cryptoPrivateKey, jwtSecretKey } from '../../config/environment';
 import jwt from 'jsonwebtoken';
 
 // register user
@@ -14,7 +14,7 @@ const registerUser = async (newUser: Partial<IUser>) => {
     throw new BadRequestError(`A user with username: ${username} or email: ${email} already exists`);
   }
 
-  newUser.password = CryptoJS.AES.encrypt(password!, environment.cryptoPrivateKey).toString();
+  newUser.password = CryptoJS.AES.encrypt(password!, cryptoPrivateKey).toString();
   return await UserRepository.createUser(newUser);
 };
 
@@ -27,7 +27,7 @@ const loginUser = async (user: Partial<IUser>) => {
     throw new BadRequestError('The credentials are incorrect');
   }
 
-  const bytes = CryptoJS.AES.decrypt(password, environment.cryptoPrivateKey);
+  const bytes = CryptoJS.AES.decrypt(password, cryptoPrivateKey);
   const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
   if (originalPassword !== user.password) {
@@ -35,7 +35,7 @@ const loginUser = async (user: Partial<IUser>) => {
   }
 
   const { _id: id, isAdmin, username } = existingUser;
-  const accessToken = jwt.sign({ id, isAdmin, username }, environment.jwtSecretKey, {
+  const accessToken = jwt.sign({ id, isAdmin, username }, jwtSecretKey, {
     expiresIn: '1h',
   });
 

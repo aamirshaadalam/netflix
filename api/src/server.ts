@@ -1,8 +1,6 @@
-import environment from './config/environment';
+import { port } from './config/environment';
 import app from './app';
 import { connectDB } from './config/database';
-
-const { port } = environment;
 
 const startServer = async (): Promise<void> => {
   try {

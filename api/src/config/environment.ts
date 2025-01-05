@@ -4,24 +4,17 @@ import { ConfigurationError } from '../core/errors';
 
 dotenv.config();
 
-const envSchema = Joi.object({
+const schema = Joi.object({
   PORT: Joi.number().required(),
   DB_URI: Joi.string().required(),
   CRYPTO_PRIVATE_KEY: Joi.string().required(),
   JWT_SECRET_KEY: Joi.string().required(),
-}).unknown();
+});
 
-const { error, value: envVars } = envSchema.validate(process.env);
+const { error, value } = schema.validate(process.env);
 
 if (error) {
   throw new ConfigurationError(error.message);
 }
 
-const { PORT, DB_URI, CRYPTO_PRIVATE_KEY, JWT_SECRET_KEY } = envVars;
-
-export default {
-  port: PORT,
-  dbUri: DB_URI,
-  cryptoPrivateKey: CRYPTO_PRIVATE_KEY,
-  jwtSecretKey: JWT_SECRET_KEY,
-};
+export const { PORT: port, DB_URI: dbUri, CRYPTO_PRIVATE_KEY: cryptoPrivateKey, JWT_SECRET_KEY: jwtSecretKey } = value;

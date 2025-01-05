@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import { UnauthorizedError, ForbiddenError } from '../../core/errors';
 import jwt from 'jsonwebtoken';
-import environment from '../../config/environment';
+import { jwtSecretKey } from '../../config/environment';
 import { CustomRequest } from '../../types/CustomRequest';
 
 const authenticateToken = (req: CustomRequest, _res: Response, next: NextFunction) => {
@@ -11,7 +11,7 @@ const authenticateToken = (req: CustomRequest, _res: Response, next: NextFunctio
     throw new UnauthorizedError('You are not authorized to access the requested resource');
   }
 
-  jwt.verify(token, environment.jwtSecretKey, (err: any, user: any) => {
+  jwt.verify(token, jwtSecretKey, (err: any, user: any) => {
     if (err) {
       throw new ForbiddenError('The token is not valid');
     }
