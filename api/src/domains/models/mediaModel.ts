@@ -15,19 +15,22 @@ export interface IMedia extends Document {
   isMovie: boolean;
 }
 
-const MediaSchema: Schema = new Schema({
-  title: { type: String, required: true, unique: true },
-  description: { type: String },
-  img: { type: String },
-  titleImg: { type: String },
-  thumbnailImg: { type: String },
-  trailer: { tyep: String },
-  video: { type: String },
-  year: { type: Number },
-  duration: { type: String },
-  rating: { type: String },
-  genre: { type: String },
-  isMovie: { type: Boolean, default: true },
-});
+const MediaSchema: Schema = new Schema(
+  {
+    title: { type: String, required: true, unique: true },
+    description: { type: String },
+    img: { type: String },
+    titleImg: { type: String },
+    thumbnailImg: { type: String },
+    trailer: { type: String },
+    video: { type: String },
+    year: { type: Number },
+    duration: { type: String },
+    rating: { type: String },
+    genre: { type: String },
+    isMovie: { type: Boolean, default: true },
+  },
+  { timestamps: true }
+);
 
 export default model<IMedia>('Media', MediaSchema);
