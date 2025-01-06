@@ -6,10 +6,10 @@ const getMedia = async (req: CustomRequest) => {
   return await MediaRepository.findMediaById(req.params.id);
 };
 
-const getRandomMedia = async (req: CustomRequest) => {
+const getFeaturedMedia = async (req: CustomRequest) => {
   const type = req.query.type || '';
   const isMovie = !(type.toString().toLowerCase() === 'series');
-  return await MediaRepository.getRandomMedia(isMovie);
+  return await MediaRepository.getFeaturedMedia(isMovie);
 };
 
 const getAllMedia = async (req: CustomRequest) => {
@@ -42,4 +42,4 @@ const deleteMedia = async (req: CustomRequest) => {
   }
 };
 
-export default { getMedia, getAllMedia, getRandomMedia, createMedia, updateMedia, deleteMedia };
+export default { getMedia, getAllMedia, getFeaturedMedia, createMedia, updateMedia, deleteMedia };

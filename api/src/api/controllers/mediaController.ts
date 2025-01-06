@@ -11,9 +11,9 @@ const getMedia = async (req: CustomRequest, res: Response, next: NextFunction) =
   }
 };
 
-const getRandomMedia = async (req: CustomRequest, res: Response, next: NextFunction) => {
+const getFeaturedMedia = async (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
-    const media = await MediaService.getRandomMedia(req);
+    const media = await MediaService.getFeaturedMedia(req);
     res.status(200).json(media);
   } catch (error) {
     next(error);
@@ -56,4 +56,4 @@ const deleteMedia = async (req: CustomRequest, res: Response, next: NextFunction
   }
 };
 
-export default { getMedia, getRandomMedia, getAllMedia, createMedia, updateMedia, deleteMedia };
+export default { getMedia, getFeaturedMedia, getAllMedia, createMedia, updateMedia, deleteMedia };

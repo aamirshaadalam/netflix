@@ -4,7 +4,7 @@ const findMediaById = async (id: string) => {
   return await Media.findById(id);
 };
 
-const getRandomMedia = async (isMovie: boolean) => {
+const getFeaturedMedia = async (isMovie: boolean) => {
   return await Media.aggregate([{ $match: { isMovie } }, { $sample: { size: 1 } }]);
 };
 
@@ -24,4 +24,4 @@ const deleteMedia = async (id: string) => {
   await Media.findByIdAndDelete(id);
 };
 
-export default { findMediaById, getRandomMedia, findAllMedia, createMedia, updateMedia, deleteMedia };
+export default { findMediaById, getFeaturedMedia, findAllMedia, createMedia, updateMedia, deleteMedia };
