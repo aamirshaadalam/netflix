@@ -58,9 +58,20 @@
                 height: 25px;
             }
 
-            span {
+            .link {
                 margin-right: 20px;
                 cursor: pointer;
+                text-decoration: none;
+                color: white;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                &.active {
+                    font-weight: 600;
+                    transform: scale(1.05);
+                }
             }
         }
 
@@ -68,8 +79,19 @@
             display: flex;
             align-items: center;
 
-            span {
+            .link {
                 cursor: pointer;
+                text-decoration: none;
+                color: white;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                &.active {
+                    font-weight: 600;
+                    transform: scale(1.05);
+                }
             }
 
             .icon {

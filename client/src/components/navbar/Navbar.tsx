@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useState } from 'react';
+import { NavLink, NavLinkRenderProps } from 'react-router-dom';
 
 export interface NavbarProps {
     type?: 'movies' | 'shows';
@@ -23,21 +24,40 @@ const Navbar = ({ type }: NavbarProps) => {
         return () => (onscroll = null);
     };
 
+    const getLinkClass = ({ isActive }: NavLinkRenderProps): string => {
+        if (isActive) return 'link active';
+        return 'link';
+    };
+
     return (
         <div className={isTransparent ? 'navbar' : 'navbar opaque'}>
             <div className='container'>
                 <div className='left'>
                     <img src='src/assets/netflix-logo.svg' alt='' />
-                    <span>Home</span>
-                    <span>TV Shows</span>
-                    <span>Movies</span>
-                    <span>New & Popular</span>
-                    <span>My List</span>
-                    <span>Browse by Languages</span>
+                    <NavLink to='/' className={getLinkClass}>
+                        Home
+                    </NavLink>
+                    <NavLink to='/shows' className={getLinkClass}>
+                        TV Shows
+                    </NavLink>
+                    <NavLink to='/movies' className={getLinkClass}>
+                        Movies
+                    </NavLink>
+                    <NavLink to='/notfound' className={getLinkClass}>
+                        New & Popular
+                    </NavLink>
+                    <NavLink to='/notfound' className={getLinkClass}>
+                        My List
+                    </NavLink>
+                    <NavLink to='/notfound' className={getLinkClass}>
+                        Browse by Languages
+                    </NavLink>
                 </div>
                 <div className='right'>
                     <SearchIcon className='icon' />
-                    <span>Children</span>
+                    <NavLink to='/notfound' className={getLinkClass}>
+                        Children
+                    </NavLink>
                     <NotificationsIcon className='icon' />
                     <img src='src/assets/profile-pic.jpg' alt='' />
                     <div className='profile'>
